@@ -9,6 +9,13 @@ Run the **PetalPress** pipeline. The user has provided these webpage requirement
 
 If `$ARGUMENTS` is empty, ask the user for their webpage requirements first, then proceed.
 
+## Hard rules (read before starting)
+
+1. **All 8 agents must run.** Do not stop early. Even if step 7 succeeds and the page looks "done", you must still run step 8 (reporter) to produce `output/report.html`.
+2. **The 5→6→7 loop runs literally 5 times,** sequentially: weather → flower → injector → weather → flower → injector → … Five complete iterations. Do not batch.
+3. **Use the Task tool for every sub-agent.** Don't shortcut by writing HTML or fetching weather yourself.
+4. **Verify after each step.** After step 4 confirm `output/index.html` exists. After each loop iteration confirm both `output/country-images/<slug>.jpg` exists and the new `<article>` block was actually inserted into `index.html`. If anything is missing, retry that step before moving on; do not skip ahead.
+
 ## Pipeline
 
 Maintain a `run_log` array. After each sub-agent call, append a record:
@@ -34,10 +41,14 @@ The 5→6→7 loop is the showcase feature. Run **all three agents per iteration
 
 ## After completion
 
-Print a short summary to the user:
+Verify both files exist:
+- `output/index.html` (with 5 country cards inside `<div id="country-grid">`)
+- `output/report.html`
+
+Then print a short summary to the user:
 - Path to `output/index.html`
 - Path to `output/report.html`
 - The 5 countries that were processed
 - Suggest opening `output/index.html` in a browser
 
-If anything fails mid-pipeline, stop and surface the failing step + error to the user — do not silently skip.
+If anything fails mid-pipeline, stop and surface the failing step + error to the user — do not silently skip and do not pretend the pipeline finished. The user explicitly requested all 8 agents to run, including the report.

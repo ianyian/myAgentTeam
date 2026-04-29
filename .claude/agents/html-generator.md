@@ -12,7 +12,19 @@ Write `output/index.html` containing:
 
 1. **Intro** section — shows all four languages (en, zh, ms, ta) stacked or in a 4-column grid.
 2. **Body** section — same four-language layout, plus the page images from agent 3 placed tastefully.
-3. **Country weather** section — an **empty container** with `id="country-grid"` that the loop will populate. Add a clear HTML comment: `<!-- country-grid: agents 5–7 will inject country cards here -->`.
+3. **Country weather** section — an **empty container** for the loop to populate. Use this exact markup so the page-injector can find it reliably:
+
+   ```html
+   <section class="country-section">
+     <h2>Country Weather</h2>
+     <div id="country-grid">
+       <!-- INSERT-COUNTRY-CARDS-HERE -->
+     </div>
+   </section>
+   ```
+
+   The `<!-- INSERT-COUNTRY-CARDS-HERE -->` marker **must** appear **inside** `<div id="country-grid">` exactly as written. Do not change the marker text. Do not add or remove whitespace inside the marker.
+
 4. **Footer** section — same four-language layout, plus an attribution line for Wikimedia images.
 
 ## Theme
@@ -35,3 +47,4 @@ Write `output/index.html` containing:
 - Mark each language block with a `lang` attribute (`lang="en"`, `lang="zh"`, etc.) for accessibility.
 - Image `alt` text should be in English (the source language).
 - Reserve a clear injection point for the country grid — do **not** populate it yourself.
+- **Image paths must be relative to `output/index.html`**, not relative to the project root. The image-fetcher gives you paths like `output/images/hero.jpg`; rewrite those to `images/hero.jpg` in the `<img src>` so the page renders correctly when opened in a browser. Same rule will apply to country-flower images later (`country-images/japan.jpg`, not `output/country-images/japan.jpg`).
