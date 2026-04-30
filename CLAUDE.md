@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## When the user describes a webpage, route through `/build-page`
 
-If the user says anything like *"build me a page about X"*, *"make a webpage on Y"*, or otherwise describes webpage content/requirements — **invoke the `/build-page` slash command** with their description as the argument. Do **not** write HTML yourself; the agent team is the whole point.
+If the user says anything like _"build me a page about X"_, _"make a webpage on Y"_, or otherwise describes webpage content/requirements — **invoke the `/build-page` slash command** with their description as the argument. Do **not** write HTML yourself; the agent team is the whole point.
 
 If they explicitly want one-off HTML help unrelated to the team (e.g., "fix this typo in src/lib/types.ts"), handle it normally.
 
@@ -20,8 +20,8 @@ If they explicitly want one-off HTML help unrelated to the team (e.g., "fix this
 2. **translator** — English → zh / ms / ta (page shows all four).
 3. **image-fetcher** — 2–3 page images via the `images` MCP → `output/images/`.
 4. **html-generator** — writes `output/index.html`, pink + soft pastel theme, leaves `<div id="country-grid">` empty.
-5–7. **Loop ×5 distinct countries** — `weather-fetcher` → `flower-fetcher` → `page-injector`. The order 5→6→7 must be visible per iteration; don't batch.
-8. **reporter** — writes `output/report.html` from the run log.
+   5–7. **Loop ×5 distinct countries** — `weather-fetcher` → `flower-fetcher` → `page-injector`. The order 5→6→7 must be visible per iteration; don't batch.
+5. **reporter** — writes `output/report.html` from the run log.
 
 The loop is the showcase feature. When orchestrating, run all three loop agents per iteration before starting the next iteration — never run 5 weather calls then 5 flower calls.
 
@@ -56,7 +56,7 @@ npm run mcp:images             # run images MCP standalone (debugging)
 
 In Claude Code: `/build-page <requirements>` and `/reset`.
 
-## Output layout (gitignored)
+## Output layout (tracked in repo)
 
 ```
 output/
@@ -66,7 +66,7 @@ output/
 └── country-images/         # national flower images (agent #6)
 ```
 
-`output/` is wiped clean by `/reset` or `npm run reset`. Source code is never touched by reset.
+`output/` is tracked in the repository and contains the generated artifacts from the pipeline. It is wiped clean by `/reset` or `npm run reset`. Source code is never touched by reset.
 
 ## Things that will surprise a future maintainer
 

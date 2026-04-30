@@ -5,3 +5,6 @@ dist/
 .env.local
 .DS_Store
 mcp-servers/*/dist/
+
+# Track output folder (now committed to repo)
+!output/
