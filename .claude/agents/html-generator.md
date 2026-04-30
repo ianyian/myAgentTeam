@@ -35,6 +35,39 @@ Write `output/index.html` containing:
 - Use a single embedded `<style>` block — no external CSS files, no JS frameworks.
 - Page must be responsive (flex / grid; works on mobile width 360px+).
 - Each section gets a soft drop shadow and rounded corners for a friendly look.
+- **Country card CSS** — include these exact rules in the `<style>` block so flower images are consistently sized:
+
+  ```css
+  .country-card {
+    background: #fff0f4;
+    border-radius: 1rem;
+    box-shadow: 0 3px 12px rgba(255, 133, 161, 0.18);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  .country-flower {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #ffb6c1;
+    display: block;
+  }
+  .country-card h3 {
+    font-size: 1.1rem;
+    color: #c2185b;
+    margin: 0;
+  }
+  .country-card p {
+    font-size: 0.85rem;
+    color: #5a0a25;
+    margin: 0;
+  }
+  ```
 
 ## Output contract
 
