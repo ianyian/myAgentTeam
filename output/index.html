@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMW — A Celebration of Driving</title>
+  <style>
+    /* Base */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #fff5f7;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   "Noto Sans", "Noto Sans CJK SC", "Noto Sans Tamil",
+                   "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB",
+                   "Latha", "Vijaya", sans-serif;
+      color: #3a0a18;
+      line-height: 1.7;
+    }
+
+    /* Layout shell */
+    .page-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    /* Site header */
+    .site-header {
+      text-align: center;
+      padding: 2.5rem 1.5rem 2rem;
+      background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 50%, #ff85a1 100%);
+      border-radius: 1.25rem;
+      box-shadow: 0 4px 20px rgba(255, 133, 161, 0.25);
+    }
+    .site-header .logo-ring {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: #fff0f4;
+      border: 4px solid #ff85a1;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #c2185b;
+      margin-bottom: 0.75rem;
+      letter-spacing: -1px;
+    }
+    .site-header h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(194, 24, 91, 0.3);
+    }
+    .site-header .tagline {
+      margin-top: 0.4rem;
+      font-size: 1rem;
+      color: #fff0f4;
+      font-style: italic;
+    }
+
+    /* Generic section card */
+    .section-card {
+      background: #fdf6f8;
+      border-radius: 1.25rem;
+      box-shadow: 0 3px 16px rgba(255, 133, 161, 0.15);
+      padding: 2rem 2rem 1.75rem;
+      overflow: hidden;
+    }
+    .section-card h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #c2185b;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #ffd1dc;
+    }
+
+    /* Language grid */
+    .lang-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+    .lang-block {
+      background: #fff0f4;
+      border-radius: 0.875rem;
+      padding: 1rem 1.1rem;
+      box-shadow: 0 2px 8px rgba(255, 133, 161, 0.1);
+    }
+    .lang-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #ff85a1;
+      border-radius: 99px;
+      padding: 0.15rem 0.55rem;
+      margin-bottom: 0.5rem;
+    }
+    .lang-block p {
+      font-size: 0.93rem;
+      color: #5a0a25;
+    }
+
+    /* Hero image */
+    .hero-image-wrap {
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(255, 133, 161, 0.2);
+      margin-bottom: 1.5rem;
+    }
+    .hero-image-wrap img {
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-image-wrap figcaption {
+      background: #ffd1dc;
+      color: #5a0a25;
+      font-size: 0.82rem;
+      text-align: center;
+      padding: 0.45rem 1rem;
+    }
+
+    /* Body image row */
+    .body-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .body-image-item {
+      border-radius: 0.875rem;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(255, 133, 161, 0.15);
+    }
+    .body-image-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .body-image-item figcaption {
+      background: #ffd1dc;
+      color: #5a0a25;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 0.4rem 0.75rem;
+    }
+
+    /* Country section */
+    .country-section {
+      background: #fdf6f8;
+      border-radius: 1.25rem;
+      box-shadow: 0 3px 16px rgba(255, 133, 161, 0.15);
+      padding: 2rem;
+    }
+    .country-section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #c2185b;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #ffd1dc;
+    }
+    #country-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.25rem;
+    }
+
+    /* Country card — exact rules required by spec */
+    .country-card {
+      background: #fff0f4;
+      border-radius: 1rem;
+      box-shadow: 0 3px 12px rgba(255, 133, 161, 0.18);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.5rem;
+    }
+    .country-flower {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #ffb6c1;
+      display: block;
+    }
+    .country-card h3 {
+      font-size: 1.1rem;
+      color: #c2185b;
+      margin: 0;
+    }
+    .country-card p {
+      font-size: 0.85rem;
+      color: #5a0a25;
+      margin: 0;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: linear-gradient(135deg, #ffb6c1 0%, #ffd1dc 100%);
+      border-radius: 1.25rem;
+      box-shadow: 0 3px 16px rgba(255, 133, 161, 0.2);
+      padding: 2rem;
+    }
+    .site-footer h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #c2185b;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #ff85a1;
+    }
+    .attribution {
+      margin-top: 1.5rem;
+      font-size: 0.78rem;
+      color: #7a1030;
+      text-align: center;
+      border-top: 1px solid #ffb6c1;
+      padding-top: 1rem;
+    }
+    .attribution a { color: #c2185b; }
+
+    /* Responsive tweaks */
+    @media (max-width: 480px) {
+      .page-wrapper { padding: 1rem 0.75rem 2rem; gap: 1.5rem; }
+      .section-card, .country-section, .site-footer { padding: 1.25rem; }
+      .lang-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- ===== SITE HEADER ===== -->
+  <header class="site-header">
+    <div class="logo-ring">BMW</div>
+    <h1>Bayerische Motoren Werke</h1>
+    <p class="tagline">Sheer Driving Pleasure — since 1916</p>
+  </header>
+
+  <!-- ===== INTRO SECTION ===== -->
+  <section class="section-card">
+    <h2>Introduction</h2>
+    <div class="lang-grid">
+
+      <div class="lang-block" lang="en">
+        <span class="lang-tag">EN</span>
+        <p>Welcome to a celebration of BMW — Bayerische Motoren Werke — one of the world's most iconic automotive brands. Known for their perfect balance of performance, luxury, and engineering precision, BMW cars have captivated drivers for over a century.</p>
+      </div>
+
+      <div class="lang-block" lang="zh">
+        <span class="lang-tag">ZH</span>
+        <p>欢迎来到宝马（BMW）的品牌庆典。宝马以其卓越的性能、奢华与工程精度的完美平衡著称，百余年来令无数驾驶者为之倾心。</p>
+      </div>
+
+      <div class="lang-block" lang="ms">
+        <span class="lang-tag">MS</span>
+        <p>Selamat datang ke perayaan BMW — Bayerische Motoren Werke — salah satu jenama automotif paling ikonik di dunia.</p>
+      </div>
+
+      <div class="lang-block" lang="ta">
+        <span class="lang-tag">TA</span>
+        <p>உலகின் மிகவும் புகழ்பெற்ற வாகன பிராண்டுகளில் ஒன்றான BMW கொண்டாட்டத்திற்கு வரவேற்கிறோம்.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== BODY SECTION ===== -->
+  <section class="section-card">
+    <h2>About BMW</h2>
+
+    <!-- Hero image -->
+    <figure class="hero-image-wrap">
+      <img src="images/hero.jpg" alt="BMW M3 Competition" />
+      <figcaption>BMW M3 Competition</figcaption>
+    </figure>
+
+    <div class="lang-grid">
+
+      <div class="lang-block" lang="en">
+        <span class="lang-tag">EN</span>
+        <p>BMW was founded in Munich, Germany in 1916. Key model variants include the iconic 3 Series sports sedan, the executive 5 Series, the flagship 7 Series luxury sedan, the X Series SUVs, the high-performance M Series, and the electric i Series.</p>
+      </div>
+
+      <div class="lang-block" lang="zh">
+        <span class="lang-tag">ZH</span>
+        <p>宝马于1916年在德国慕尼黑创立。主要车型包括：3系运动轿车、5系、7系豪华轿车、X系列SUV、高性能M系列，以及电动i系列。</p>
+      </div>
+
+      <div class="lang-block" lang="ms">
+        <span class="lang-tag">MS</span>
+        <p>BMW diasaskan di Munich, Jerman pada tahun 1916. Varian model utama merangkumi sedan sukan 3 Series, 5 Series eksekutif, 7 Series mewah, SUV siri X, siri M berprestasi tinggi, dan siri i elektrik.</p>
+      </div>
+
+      <div class="lang-block" lang="ta">
+        <span class="lang-tag">TA</span>
+        <p>BMW 1916 ஆம் ஆண்டு ஜெர்மனியின் மியூனிக்கில் நிறுவப்பட்டது. முக்கிய மாடல் வகைகளில் 3 சீரிஸ், 5 சீரிஸ், 7 சீரிஸ், X சீரிஸ் SUVகள், M சீரிஸ் மற்றும் i சீரிஸ் அடங்கும்.</p>
+      </div>
+
+    </div>
+
+    <!-- Body images -->
+    <div class="body-images">
+      <figure class="body-image-item">
+        <img src="images/body-1.jpg" alt="BMW 3 Series (2022)" />
+        <figcaption>BMW 3 Series (2022)</figcaption>
+      </figure>
+      <figure class="body-image-item">
+        <img src="images/body-2.jpg" alt="BMW i8 Hybrid Supercar" />
+        <figcaption>BMW i8 Hybrid Supercar</figcaption>
+      </figure>
+    </div>
+
+  </section>
+
+  <!-- ===== COUNTRY WEATHER SECTION ===== -->
+  <section class="country-section">
+    <h2>Country Weather &amp; National Flowers</h2>
+    <div id="country-grid">
+      <article class="country-card">
+  <img src="country-images/germany.jpg" alt="Cornflower" class="country-flower">
+  <h3>Germany</h3>
+  <p class="capital">Berlin</p>
+  <p class="weather">5.9°C — Clear sky</p>
+  <p class="wind">Wind: 2.1 km/h</p>
+  <p class="flower-name">National flower: <em>Cornflower</em></p>
+</article>
+<article class="country-card">
+  <img src="country-images/japan.jpg" alt="Cherry blossom" class="country-flower">
+  <h3>Japan</h3>
+  <p class="capital">Tokyo</p>
+  <p class="weather">14.9°C — Overcast</p>
+  <p class="wind">Wind: 3 km/h</p>
+  <p class="flower-name">National flower: <em>Cherry blossom</em></p>
+</article>
+<article class="country-card">
+  <img src="country-images/south-africa.jpg" alt="King Protea" class="country-flower">
+  <h3>South Africa</h3>
+  <p class="capital">Pretoria</p>
+  <p class="weather">11.6°C — Overcast</p>
+  <p class="wind">Wind: 11.9 km/h</p>
+  <p class="flower-name">National flower: <em>King Protea</em></p>
+</article>
+<article class="country-card">
+  <img src="country-images/canada.jpg" alt="Trillium" class="country-flower">
+  <h3>Canada</h3>
+  <p class="capital">Ottawa</p>
+  <p class="weather">7.6°C — Overcast</p>
+  <p class="wind">Wind: 13.9 km/h</p>
+  <p class="flower-name">National flower: <em>Trillium</em></p>
+</article>
+<article class="country-card">
+  <img src="country-images/argentina.jpg" alt="Ceibo" class="country-flower">
+  <h3>Argentina</h3>
+  <p class="capital">Buenos Aires</p>
+  <p class="weather">14.9°C — Clear sky</p>
+  <p class="wind">Wind: 3 km/h</p>
+  <p class="flower-name">National flower: <em>Ceibo</em></p>
+</article>
+<!-- country-grid: agents 5–7 will inject country cards here -->
+    </div>
+  </section>
+
+  <!-- ===== FOOTER SECTION ===== -->
+  <footer class="site-footer">
+    <h2>Thank You</h2>
+    <div class="lang-grid">
+
+      <div class="lang-block" lang="en">
+        <span class="lang-tag">EN</span>
+        <p>Thank you for exploring the world of BMW. Whether you're a lifelong enthusiast or just discovering BMW, the road ahead is always exciting.</p>
+      </div>
+
+      <div class="lang-block" lang="zh">
+        <span class="lang-tag">ZH</span>
+        <p>感谢您探索宝马的世界。无论您是忠实爱好者还是初识宝马，前方的旅途永远令人充满期待。</p>
+      </div>
+
+      <div class="lang-block" lang="ms">
+        <span class="lang-tag">MS</span>
+        <p>Terima kasih kerana meneroka dunia BMW. Sama ada anda seorang peminat seumur hidup atau baru mengenali BMW, jalan ke hadapan sentiasa mendebarkan.</p>
+      </div>
+
+      <div class="lang-block" lang="ta">
+        <span class="lang-tag">TA</span>
+        <p>BMW உலகை ஆராய நேரம் ஒதுக்கியதற்கு நன்றி.</p>
+      </div>
+
+    </div>
+
+    <p class="attribution">
+      Images sourced from <a href="https://www.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>
+      under their respective free licences. National flower images provided via Wikipedia REST API.
+    </p>
+  </footer>
+
+</div><!-- /.page-wrapper -->
+</body>
+</html>
