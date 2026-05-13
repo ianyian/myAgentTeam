@@ -22,6 +22,11 @@ const MCP_SERVERS: Options["mcpServers"] = {
     command: "npx",
     args: ["tsx", resolve(PROJECT_ROOT, "mcp-servers/images/src/index.ts")],
   },
+  mssql: {
+    type: "stdio",
+    command: "npx",
+    args: ["tsx", resolve(PROJECT_ROOT, "mcp-servers/mssql/src/index.ts")],
+  },
 };
 
 export interface RunAgentResult {

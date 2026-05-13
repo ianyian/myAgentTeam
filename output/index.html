@@ -1,108 +1,131 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PetalPress - Malaysia's Proton Car</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ford Cars — A Legacy of Innovation</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Noto Sans CJK SC", "Noto Sans CJK TC", "Microsoft YaHei", "Noto Sans Tamil", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", "Noto Sans CJK SC",
+        "Noto Sans Tamil", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB",
+        "Latha", "Tamil MN", Arial, sans-serif;
       background: #fff5f7;
-      color: #5a0a25;
-      line-height: 1.6;
-      padding: 1rem;
+      color: #3a0010;
+      line-height: 1.7;
     }
 
-    .container {
-      max-width: 1200px;
+    header {
+      background: linear-gradient(135deg, #ff85a1 0%, #ffb6c1 60%, #ffd1dc 100%);
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      box-shadow: 0 4px 18px rgba(255, 133, 161, 0.25);
+    }
+    header h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(180, 0, 60, 0.3);
+      letter-spacing: 0.04em;
+    }
+    header p {
+      color: #fff0f4;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    main {
+      max-width: 1100px;
       margin: 0 auto;
+      padding: 2rem 1rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
     }
 
-    h1, h2, h3 {
-      color: #c2185b;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    section {
-      background: white;
-      border-radius: 1rem;
-      box-shadow: 0 4px 16px rgba(255, 133, 161, 0.2);
+    .card {
+      background: #fff;
+      border-radius: 1.2rem;
+      box-shadow: 0 4px 20px rgba(255, 133, 161, 0.15);
       padding: 2rem;
-      margin-bottom: 2rem;
+    }
+    .card h2 {
+      font-size: 1.4rem;
+      color: #c2185b;
+      margin-bottom: 1.2rem;
+      border-bottom: 2px solid #ffd1dc;
+      padding-bottom: 0.5rem;
     }
 
     .lang-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
     }
-
     .lang-block {
       background: #fdf6f8;
-      border-left: 4px solid #ff85a1;
-      padding: 1rem;
-      border-radius: 0.5rem;
+      border-radius: 0.8rem;
+      padding: 1rem 1.2rem;
+      border-left: 4px solid #ffb6c1;
     }
-
     .lang-label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.08em;
       color: #ff85a1;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.5px;
+      margin-bottom: 0.4rem;
     }
-
-    .lang-text {
-      font-size: 1rem;
+    .lang-block p {
+      font-size: 0.92rem;
       color: #5a0a25;
     }
 
-    .hero-image {
-      width: 100%;
-      max-width: 600px;
-      height: auto;
-      border-radius: 0.75rem;
-      margin: 1.5rem auto;
-      display: block;
-      box-shadow: 0 3px 12px rgba(255, 133, 161, 0.15);
-    }
-
     .body-images {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin: 1.5rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      justify-content: center;
     }
-
+    .body-images figure {
+      flex: 1 1 220px;
+      max-width: 320px;
+      margin: 0;
+      text-align: center;
+    }
     .body-images img {
       width: 100%;
-      height: auto;
-      border-radius: 0.75rem;
-      box-shadow: 0 3px 12px rgba(255, 133, 161, 0.15);
+      height: 200px;
+      object-fit: cover;
+      border-radius: 0.8rem;
+      border: 3px solid #ffd1dc;
+      display: block;
+    }
+    .body-images figcaption {
+      font-size: 0.78rem;
+      color: #a0405a;
+      margin-top: 0.4rem;
+    }
+
+    .country-section {
+      background: #fff;
+      border-radius: 1.2rem;
+      box-shadow: 0 4px 20px rgba(255, 133, 161, 0.15);
+      padding: 2rem;
+    }
+    .country-section h2 {
+      font-size: 1.4rem;
+      color: #c2185b;
+      margin-bottom: 1.2rem;
+      border-bottom: 2px solid #ffd1dc;
+      padding-bottom: 0.5rem;
     }
 
     #country-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.2rem;
     }
 
     .country-card {
@@ -116,7 +139,6 @@
       text-align: center;
       gap: 0.5rem;
     }
-
     .country-flower {
       width: 120px;
       height: 120px;
@@ -125,189 +147,187 @@
       border: 3px solid #ffb6c1;
       display: block;
     }
-
     .country-card h3 {
       font-size: 1.1rem;
       color: #c2185b;
       margin: 0;
     }
-
     .country-card p {
       font-size: 0.85rem;
       color: #5a0a25;
       margin: 0;
     }
 
+    footer {
+      background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 100%);
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .footer-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.8rem;
+      text-align: left;
+    }
+    .footer-lang {
+      background: rgba(255,255,255,0.5);
+      border-radius: 0.6rem;
+      padding: 0.7rem 1rem;
+      font-size: 0.8rem;
+      color: #5a0a25;
+    }
     .attribution {
+      margin-top: 1.2rem;
       font-size: 0.75rem;
-      color: #888;
-      margin-top: 1.5rem;
-      padding-top: 1rem;
-      border-top: 1px solid #ffd1dc;
+      color: #a0405a;
     }
 
-    .attribution a {
-      color: #ff85a1;
-      text-decoration: none;
-    }
-
-    .attribution a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      h2 {
-        font-size: 1.25rem;
-      }
-
-      section {
-        padding: 1.5rem;
-      }
-
-      .lang-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 480px) {
+      header { padding: 2rem 1rem 1.5rem; }
+      .card { padding: 1.2rem; }
+      .lang-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Intro Section -->
-    <section>
-      <h1>PetalPress</h1>
-      <img src="images/hero.jpg" alt="Proton Holdings" class="hero-image">
 
-      <div class="lang-grid">
-        <div class="lang-block" lang="en">
-          <div class="lang-label">English</div>
-          <div class="lang-text">A short page about Malaysia's Proton car</div>
-        </div>
-        <div class="lang-block" lang="zh">
-          <div class="lang-label">中文</div>
-          <div class="lang-text">关于马来西亚宝腾汽车的简短页面</div>
-        </div>
-        <div class="lang-block" lang="ms">
-          <div class="lang-label">Bahasa Melayu</div>
-          <div class="lang-text">Halaman ringkas tentang kereta Proton Malaysia</div>
-        </div>
-        <div class="lang-block" lang="ta">
-          <div class="lang-label">தமிழ்</div>
-          <div class="lang-text">மலேசியாவின் புரோட்டான் கார் பற்றிய சிறு பக்கம்</div>
-        </div>
+<header>
+  <h1>&#x1F697; Ford: A Legacy of Innovation</h1>
+  <p>Celebrating the iconic vehicles that shaped the world</p>
+</header>
+
+<main>
+
+  <section class="card" aria-label="Introduction">
+    <h2>Introduction</h2>
+    <div class="lang-grid">
+      <div class="lang-block" lang="en">
+        <div class="lang-label">English</div>
+        <p>Welcome to a celebration of Ford — one of the world's most iconic automotive brands. From humble beginnings in a Detroit workshop to becoming a global force in motoring, Ford has shaped the way the world drives. Explore the rich legacy of Ford's most beloved car variants below.</p>
       </div>
-    </section>
-
-    <!-- Body Section -->
-    <section>
-      <h2>About Proton Cars</h2>
-
-      <div class="lang-grid">
-        <div class="lang-block" lang="en">
-          <div class="lang-label">English</div>
-          <div class="lang-text">The history and variants of Proton cars</div>
-        </div>
-        <div class="lang-block" lang="zh">
-          <div class="lang-label">中文</div>
-          <div class="lang-text">宝腾汽车的历史与车型</div>
-        </div>
-        <div class="lang-block" lang="ms">
-          <div class="lang-label">Bahasa Melayu</div>
-          <div class="lang-text">Sejarah dan varian kereta Proton</div>
-        </div>
-        <div class="lang-block" lang="ta">
-          <div class="lang-label">தமிழ்</div>
-          <div class="lang-text">புரோட்டான் கார்களின் வரலாறு மற்றும் வகைகள்</div>
-        </div>
+      <div class="lang-block" lang="zh">
+        <div class="lang-label">&#20013;&#25991;</div>
+        <p>&#27426;&#36814;&#26469;&#21040;&#31119;&#29305;&#30340;&#24202;&#20856;&#8212;&#8212;&#19990;&#30028;&#19978;&#26368;&#20855;&#26631;&#24535;&#24615;&#30340;&#27719;&#36710;&#21697;&#29260;&#20043;&#19968;&#12290;&#20174;&#24213;&#29305;&#24405;&#19968;&#38388;&#23567;&#23567;&#30340;&#24037;&#20316;&#22362;&#36215;&#27493;&#65292;&#21040;&#25104;&#20026;&#20840;&#29699;&#27719;&#36710;&#34892;&#19994;&#30340;&#37325;&#35201;&#21147;&#37327;&#65292;&#31119;&#29305;&#22615;&#36896;&#20102;&#19990;&#30028;&#39222;&#39338;&#30340;&#26041;&#24335;&#12290;&#35831;&#22312;&#19979;&#26041;&#25216;&#32034;&#31119;&#29305;&#26368;&#21463;&#21916;&#29233;&#36710;&#22411;&#30340;&#20016;&#23500;&#20256;&#25215;&#12290;</p>
       </div>
-
-      <div class="body-images">
-        <img src="images/body-1.jpg" alt="Proton Waja">
-        <img src="images/body-2.jpg" alt="Proton Saga">
+      <div class="lang-block" lang="ms">
+        <div class="lang-label">Bahasa Melayu</div>
+        <p>Selamat datang ke perayaan Ford — salah satu jenama automotif paling ikonik di dunia. Bermula dari sebuah bengkel kecil di Detroit hingga menjadi kuasa global dalam industri motorcar, Ford telah membentuk cara dunia memandu. Terokai warisan kaya pelbagai model kereta Ford yang paling dicintai di bawah.</p>
       </div>
-    </section>
-
-    <!-- Country Weather Section -->
-    <section class="country-section">
-      <h2>Country Weather</h2>
-      <div id="country-grid">
-        <article class="country-card">
-          <img src="country-images/brazil.jpg" alt="Ipê Amarelo (Yellow Ipê)" class="country-flower">
-          <h3>Brazil</h3>
-          <p class="capital">Brazil</p>
-          <p class="weather">30.6°C — Partly cloudy</p>
-          <p class="wind">Wind: 11 km/h</p>
-          <p class="flower-name">National flower: <em>Ipê Amarelo (Yellow Ipê)</em></p>
-        </article>
-        <article class="country-card">
-          <img src="country-images/japan.jpg" alt="Cherry Blossom (Sakura)" class="country-flower">
-          <h3>Japan</h3>
-          <p class="capital">Tokyo</p>
-          <p class="weather">11.3°C — Light drizzle</p>
-          <p class="wind">Wind: 5.2 km/h</p>
-          <p class="flower-name">National flower: <em>Cherry Blossom (Sakura)</em></p>
-        </article>
-        <article class="country-card">
-          <img src="country-images/norway.jpg" alt="Heather (Calluna vulgaris)" class="country-flower">
-          <h3>Norway</h3>
-          <p class="capital">Norway</p>
-          <p class="weather">16.5°C — Clear sky</p>
-          <p class="wind">Wind: 11.5 km/h</p>
-          <p class="flower-name">National flower: <em>Heather (Calluna vulgaris)</em></p>
-        </article>
-        <article class="country-card">
-          <img src="country-images/kenya.jpg" alt="Orchid" class="country-flower">
-          <h3>Kenya</h3>
-          <p class="capital">Kenya</p>
-          <p class="weather">28.1°C — Mainly clear</p>
-          <p class="wind">Wind: 15.9 km/h</p>
-          <p class="flower-name">National flower: <em>Orchid</em></p>
-        </article>
-        <article class="country-card">
-          <img src="country-images/australia.jpg" alt="Golden Wattle (Acacia pycnantha)" class="country-flower">
-          <h3>Australia</h3>
-          <p class="capital">Australia</p>
-          <p class="weather">18.1°C — Clear sky</p>
-          <p class="wind">Wind: 11.6 km/h</p>
-          <p class="flower-name">National flower: <em>Golden Wattle (Acacia pycnantha)</em></p>
-        </article>
-        <!-- INSERT-COUNTRY-CARDS-HERE -->
+      <div class="lang-block" lang="ta">
+        <div class="lang-label">&#2980;&#2990;&#3007;&#2996;&#3021;</div>
+        <p>&#3009;&#2994;&#2965;&#3007;&#2985;&#3021; &#2990;&#3007;&#2965;&#2997;&#3009;&#2990;&#3021; &#2986;&#3009;&#2965;&#2996;&#3021;&#2986;&#3014;&#2993;&#3021;&#2993; &#2997;&#3006;&#2965;&#2985; &#2986;&#3007;&#2992;&#3006;&#2979;&#3021;&#2791;&#3009;&#2965;&#2995;&#3007;&#2994;&#3021; &#2987;&#2985;&#3021;&#2993;&#3006;&#2985;&#3021; &#2949;&#2983;&#3021;&#2980;&#3020;&#2992;&#3021;&#2791;&#3016;&#2986;&#3021; &#2986;&#3006;&#2992;&#3006;&#2791;&#3021;&#2791;&#3009;&#2990;&#3021; &#2907;&#2984;&#3021;&#2980; &#2997;&#3007;&#2996;&#3006;&#2997;&#3007;&#2993;&#3021;&#2965;&#3009; &#2997;&#2992;&#2997;&#3019;&#2993;&#3021;&#2965;&#3007;&#2993;&#3019;&#2990;&#3021;&#12290;</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Footer Section -->
-    <section>
-      <div class="lang-grid">
-        <div class="lang-block" lang="en">
-          <div class="lang-label">English</div>
-          <div class="lang-text">Thank you</div>
-        </div>
-        <div class="lang-block" lang="zh">
-          <div class="lang-label">中文</div>
-          <div class="lang-text">谢谢</div>
-        </div>
-        <div class="lang-block" lang="ms">
-          <div class="lang-label">Bahasa Melayu</div>
-          <div class="lang-text">Terima kasih</div>
-        </div>
-        <div class="lang-block" lang="ta">
-          <div class="lang-label">தமிழ்</div>
-          <div class="lang-text">நன்றி</div>
-        </div>
+  <section class="card" aria-label="Ford Car Variants and History">
+    <h2>Ford Car Variants &amp; History</h2>
+    <div class="body-images">
+      <figure>
+        <img src="images/hero.jpg" alt="Ford Mustang sports car" />
+        <figcaption>The iconic Ford Mustang</figcaption>
+      </figure>
+      <figure>
+        <img src="images/body-1.jpg" alt="Ford Model T vintage automobile" />
+        <figcaption>The historic Ford Model T</figcaption>
+      </figure>
+      <figure>
+        <img src="images/body-2.jpg" alt="Ford F-Series pickup truck" />
+        <figcaption>The legendary Ford F-Series</figcaption>
+      </figure>
+    </div>
+    <div class="lang-grid">
+      <div class="lang-block" lang="en">
+        <div class="lang-label">English</div>
+        <p>Ford has produced some of the most recognizable vehicles in automotive history. The Ford Model T (1908&ndash;1927) revolutionized personal transportation, becoming the first mass-produced automobile thanks to Henry Ford's moving assembly line. The Ford Mustang, launched in 1964, defined the 'pony car' class and remains one of the best-selling sports cars of all time, now in its seventh generation. The Ford F-Series pickup truck has been America's best-selling vehicle for over 40 consecutive years, with the F-150 leading the charge since 1977. The Ford Explorer, introduced in 1991, popularized the modern SUV segment and continues to be a family favorite. The Ford Thunderbird (1955&ndash;2005) offered American luxury and style across eleven generations. The Ford GT, a homage to the legendary GT40 that won Le Mans four times in the 1960s, was reborn in 2005 and again in 2017 as a high-performance supercar. Together, these models represent Ford's enduring commitment to innovation, performance, and accessibility.</p>
       </div>
+      <div class="lang-block" lang="zh">
+        <div class="lang-label">&#20013;&#25991;</div>
+        <p>&#31119;&#29305;&#20986;&#21697;&#20102;&#27719;&#36710;&#21490;&#19978;&#26368;&#20855;&#36758;&#35782;&#24230;&#30340;&#19968;&#25209;&#36710;&#22411;&#12290;&#31119;&#29305;T&#22411;&#36710;&#65288;1908&ndash;1927&#24180;&#65289;&#24676;&#24213;&#25913;&#21464;&#20102;&#20491;&#20154;&#20986;&#34892;&#26041;&#24335;&#65292;&#20937;&#31119;&#12539;&#31119;&#29305;&#30340;&#31227;&#21160;&#35013;&#37197;&#32447;&#65292;&#25104;&#20026;&#39318;&#27454;&#22823;&#35268;&#27169;&#37327;&#20135;&#30340;&#27719;&#36710;&#12290;&#31119;&#29305;&#37326;&#39532;&#20110;1964&#24180;&#19978;&#24066;&#65292;&#23450;&#20041;&#20102;&#8220;&#23567;&#39532;&#36710;&#8221;&#32423;&#21035;&#65292;&#33267;&#20170;&#20173;&#26159;&#20840;&#29699;&#26368;&#30564;&#38144;&#30340;&#36816;&#21160;&#22411;&#36831;&#36710;&#20043;&#19968;&#65292;&#29616;&#24050;&#21457;&#23637;&#33267;&#31532;&#19971;&#20195;&#12290;&#31119;&#29305;F&#31995;&#21015;&#30382;&#21345;&#36830;&#32493;&#36229;&#36807;40&#24180;&#34494;&#32054;&#32654;&#22269;&#26368;&#30564;&#38144;&#36710;&#22411;&#65292;&#20854;&#20013;F-150&#33258;1977&#24180;&#20197;&#26469;&#19968;&#30452;&#39046;&#36319;&#38144;&#37327;&#12290;&#31119;&#29305;&#25506;&#38505;&#32773;&#20110;1991&#24180;&#25512;&#20986;&#65292;&#26222;&#21450;&#20102;&#29616;&#20195;SUV&#32454;&#20998;&#24066;&#22330;&#65292;&#33267;&#20170;&#20173;&#26159;&#23478;&#24237;&#29992;&#36710;&#30340;&#30286;&#38376;&#20043;&#36873;&#12290;</p>
+      </div>
+      <div class="lang-block" lang="ms">
+        <div class="lang-label">Bahasa Melayu</div>
+        <p>Ford telah menghasilkan beberapa kenderaan yang paling dikenali dalam sejarah automotif. Ford Model T (1908&ndash;1927) merevolusikan pengangkutan peribadi, menjadi automobil pertama yang dikeluarkan secara besar-besaran berkat barisan pemasangan bergerak Henry Ford. Ford Mustang, dilancarkan pada 1964, mendefinisikan kelas 'pony car' dan kekal sebagai salah satu kereta sukan terlaris sepanjang masa, kini dalam generasi ketujuhnya. Trak pikap Ford F-Series telah menjadi kenderaan terlaris di Amerika selama lebih 40 tahun berturut-turut, dengan F-150 memimpin sejak 1977. Ford Explorer, diperkenalkan pada 1991, mempopularkan segmen SUV moden dan terus menjadi pilihan kegemaran keluarga. Ford GT, penghormatan kepada GT40 legenda yang memenangi Le Mans empat kali pada tahun 1960-an, dilahirkan semula pada 2005 dan sekali lagi pada 2017 sebagai supercar berprestasi tinggi.</p>
+      </div>
+      <div class="lang-block" lang="ta">
+        <div class="lang-label">&#2980;&#2990;&#3007;&#2996;&#3021;</div>
+        <p>&#3009;&#2986;&#3021;&#2997;&#3009;&#2994;&#2965;&#3007;&#2985;&#3021; &#2990;&#3007;&#2965;&#2997;&#3009;&#2990;&#3021; &#2985;&#2985;&#3021;&#2993;&#3007; &#2978;&#2994;&#3021;&#2994;&#3009;&#2990;&#3021; &#3009;&#2997;&#3007;&#2993;&#2985;&#3021; &#2997;&#3006;&#2965;&#2985; &#2980;&#2994;&#3021;&#2994;&#2975;&#3021;&#2975;&#3007;&#2994;&#3021; &#2979;&#3007;&#2992;&#2990;&#3021; &#2985;&#2984;&#3021;&#2993;&#3006;&#2995;&#3021; &#2980;&#2985;&#3007;&#2986;&#3021;&#2986;&#2975;&#3021;&#2975; &#2986;&#3018;&#2965;&#3021;&#2965;&#3009;&#2997;&#2992;&#2980;&#3021;&#2980;&#3007;&#2994;&#3021; &#2986;&#3009;&#2992;&#2975;&#3021;&#2970;&#3007;&#2991;&#3016; &#3013;&#2993;&#3021;&#2986;&#2975;&#3009;&#2980;&#3021;&#2980;&#3007;&#2991;&#2980;&#3009;&#12290; &#3009;&#2986;&#3021;&#2997;&#3009;&#2992;&#3021;&#2791;&#3021; &#2990;&#3006;&#2975;&#2994;&#3021; &#2791;&#3007; (1908&ndash;1927) &#2980;&#2985;&#3007;&#2986;&#3021;&#2986;&#2975;&#3021;&#2975; &#2986;&#3018;&#2965;&#3021;&#2965;&#3009;&#2997;&#2992;&#2980;&#3021;&#2980;&#3007;&#2994;&#3021; &#2986;&#3009;&#2992;&#2975;&#3021;&#2970;&#3007;&#2991;&#3016; &#3013;&#2993;&#3021;&#2986;&#2975;&#3009;&#2980;&#3021;&#2980;&#3007;&#2991;&#2980;&#3009;&#12290;</p>
+      </div>
+    </div>
+  </section>
 
-      <div class="attribution">
-        <strong>Image Credits:</strong><br>
-        Images from Wikipedia / Wikimedia Commons:<br>
-        • <a href="https://en.wikipedia.org/wiki/Proton_Holdings" target="_blank">Proton Holdings</a><br>
-        • <a href="https://en.wikipedia.org/wiki/Proton_Waja" target="_blank">Proton Waja</a><br>
-        • <a href="https://en.wikipedia.org/wiki/Proton_Saga" target="_blank">Proton Saga</a><br>
-        See individual article pages for license details.
-      </div>
-    </section>
+  <section class="country-section">
+    <h2>Country Weather</h2>
+    <div id="country-grid">
+      <article class="country-card">
+        <img src="country-images/japan.jpg" alt="Cherry Blossom (Sakura)" class="country-flower">
+        <h3>Japan</h3>
+        <p class="capital">Tokyo</p>
+        <p class="weather">17.3°C — Overcast</p>
+        <p class="wind">Wind: 5.7 km/h</p>
+        <p class="flower-name">National flower: <em>Cherry Blossom (Sakura)</em></p>
+      </article>
+      <article class="country-card">
+        <img src="country-images/brazil.jpg" alt="Cattleya labiata (Purple Orchid)" class="country-flower">
+        <h3>Brazil</h3>
+        <p class="capital">Brasília</p>
+        <p class="weather">31.3°C — Clear sky</p>
+        <p class="wind">Wind: 10.0 km/h</p>
+        <p class="flower-name">National flower: <em>Cattleya labiata (Purple Orchid)</em></p>
+      </article>
+      <article class="country-card">
+        <img src="country-images/india.jpg" alt="Lotus (Nelumbo nucifera)" class="country-flower">
+        <h3>India</h3>
+        <p class="capital">New Delhi</p>
+        <p class="weather">28.7°C — Clear sky</p>
+        <p class="wind">Wind: 4.6 km/h</p>
+        <p class="flower-name">National flower: <em>Lotus (Nelumbo nucifera)</em></p>
+      </article>
+      <article class="country-card">
+        <img src="country-images/australia.jpg" alt="Golden Wattle (Acacia pycnantha)" class="country-flower">
+        <h3>Australia</h3>
+        <p class="capital">Canberra</p>
+        <p class="weather">10.0°C — Clear sky</p>
+        <p class="wind">Wind: 18.2 km/h</p>
+        <p class="flower-name">National flower: <em>Golden Wattle (Acacia pycnantha)</em></p>
+      </article>
+      <article class="country-card">
+        <img src="country-images/mexico.jpg" alt="Dahlia (national flower of Mexico)" class="country-flower">
+        <h3>Mexico</h3>
+        <p class="capital">Mexico City</p>
+        <p class="weather">24.4°C — Clear sky</p>
+        <p class="wind">Wind: 6.2 km/h</p>
+        <p class="flower-name">National flower: <em>Dahlia (Dahlia pinnata)</em></p>
+      </article>
+      <!-- INSERT-COUNTRY-CARDS-HERE -->
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-lang" lang="en">
+      <div class="lang-label">English</div>
+      &copy; 2026 PetalPress &middot; Content generated for demonstration purposes &middot; Ford and all related model names are trademarks of Ford Motor Company.
+    </div>
+    <div class="footer-lang" lang="zh">
+      <div class="lang-label">&#20013;&#25991;</div>
+      &copy; 2026 PetalPress &middot; &#20869;&#23481;&#20165;&#20379;&#28436;&#31034;&#29992;&#36884; &middot; &#31119;&#29305;&#21450;&#25152;&#26377;&#30456;&#20851;&#36710;&#22411;&#21517;&#31216;&#22343;&#20026;&#31119;&#29305;&#27719;&#36710;&#20844;&#21496;&#30340;&#21830;&#26631;&#12290;
+    </div>
+    <div class="footer-lang" lang="ms">
+      <div class="lang-label">Bahasa Melayu</div>
+      &copy; 2026 PetalPress &middot; Kandungan dijana untuk tujuan demonstrasi &middot; Ford dan semua nama model berkaitan adalah jenama dagangan Ford Motor Company.
+    </div>
+    <div class="footer-lang" lang="ta">
+      <div class="lang-label">&#2980;&#2990;&#3007;&#2996;&#3021;</div>
+      &copy; 2026 PetalPress &middot; &#3009;&#2994;&#3021;&#2994;&#2975;&#2965;&#3021;&#2965;&#2990;&#3021; &#2997;&#3007;&#2995;&#2965;&#3021;&#2965; &#2985;&#3018;&#2965;&#3021;&#2965;&#2982;&#3021;&#2965;&#2995;&#3021;&#2965;&#3006;&#2965; &#3009;&#2992;&#3009;&#2997;&#3006;&#2965;&#3021;&#2965;&#2986;&#3021;&#2986;&#2975;&#3021;&#2975;&#2980;&#3009; &middot; &#3009;&#2986;&#3021;&#2997;&#3021; &#2990;&#2993;&#3021;&#2993;&#3009;&#2990;&#3021; &#2985;&#3021;&#2985;&#3016;&#2980;&#3021;&#2980; &#2980;&#3018;&#2975;&#2992;&#3021;&#2986;&#3009;&#2975;&#3016;&#2991; &#2990;&#3006;&#2975;&#2994;&#3021; &#2986;&#3014;&#2991;&#2992;&#3021;&#2965;&#2995;&#3009;&#2990;&#3021; &#3009;&#2986;&#3021;&#2997;&#3021; &#2990;&#3018;&#2991;&#3021;&#2791;&#3006;&#2992;&#3021; &#2965;&#2990;&#3021;&#2986;&#3014;&#2985;&#3007;&#2991;&#3007;&#2985;&#3021; &#2997;&#2979;&#3007;&#2965; &#2990;&#3009;&#2980;&#3021;&#2980;&#3007;&#2992;&#3016;&#2965;&#2995;&#3021; &#2986;&#2997;&#3009;&#2990;&#3021;.
+    </div>
   </div>
+  <p class="attribution">Images sourced from Wikimedia Commons under their respective licenses.</p>
+</footer>
+
 </body>
 </html>

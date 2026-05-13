@@ -10,6 +10,11 @@
       "type": "stdio",
       "command": "npx",
       "args": ["tsx", "mcp-servers/images/src/index.ts"]
+    },
+    "mssql": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["tsx", "mcp-servers/mssql/src/index.ts"]
     }
   },
   "permissions": {
@@ -22,7 +27,8 @@
       "Bash(ls:*)",
       "Bash(open:*)",
       "mcp__weather",
-      "mcp__images"
+      "mcp__images",
+      "mcp__mssql"
     ]
   }
 }

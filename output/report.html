@@ -1,991 +1,880 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PetalPress Run Report</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --pink-deep:    #d63384;
+      --pink-mid:     #e75480;
+      --pink-light:   #f8c8d8;
+      --pink-pale:    #fde8f0;
+      --pastel-lavender: #ede7f6;
+      --pastel-mint:     #e8f5e9;
+      --pastel-peach:    #fff3e0;
+      --pastel-sky:      #e3f2fd;
+      --pastel-rose:     #fce4ec;
+      --white:        #ffffff;
+      --text-dark:    #3a1a2a;
+      --text-mid:     #6b3a4e;
+      --text-light:   #9e6b7a;
+      --border:       #f0b8cc;
+      --shadow:       rgba(214, 51, 132, 0.10);
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: linear-gradient(135deg, #ffeef8 0%, #ffe4f0 50%, #fff0f8 100%);
-      color: #4a1942;
-      padding: 2rem;
-      line-height: 1.6;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #fff0f5 0%, #fdf4ff 50%, #f0f8ff 100%);
+      color: var(--text-dark);
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--pink-deep), #9c27b0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    header .subtitle {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      margin-top: 0.35rem;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
-    h1 {
-      text-align: center;
-      color: #d63384;
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      text-shadow: 2px 2px 4px rgba(214, 51, 132, 0.1);
-    }
-
+    /* ── Summary card ───────────────────────────────────────────── */
     .summary-card {
-      background: linear-gradient(135deg, #fff5f9 0%, #ffe9f3 100%);
-      border: 2px solid #ffb3d9;
+      background: var(--white);
+      border: 1.5px solid var(--border);
       border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 8px 24px rgba(214, 51, 132, 0.15);
-    }
-
-    .summary-card h2 {
-      color: #c51162;
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-    }
-
-    .summary-grid {
+      padding: 1.6rem 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 4px 24px var(--shadow);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.2rem;
     }
-
-    .summary-item {
-      background: white;
-      padding: 1rem;
-      border-radius: 12px;
-      border: 1px solid #ffc9e3;
+    .summary-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
+      padding: 0.8rem;
+      border-radius: 10px;
+      background: var(--pink-pale);
     }
-
-    .summary-item .label {
-      font-size: 0.85rem;
-      color: #8e4585;
+    .summary-stat .value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--pink-deep);
+      line-height: 1;
+    }
+    .summary-stat .label {
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      margin-top: 0.4rem;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.5rem;
-    }
-
-    .summary-item .value {
-      font-size: 1.75rem;
-      font-weight: bold;
-      color: #d63384;
-    }
-
-    .summary-item .subvalue {
-      font-size: 0.9rem;
-      color: #6d3d6a;
-      margin-top: 0.25rem;
-    }
-
-    .timeline-section h2 {
-      color: #c51162;
-      margin: 2rem 0 1rem;
-      font-size: 1.75rem;
-    }
-
-    .loop-group {
-      margin: 2rem 0;
-      padding: 1.5rem;
-      background: linear-gradient(135deg, #fff9fc 0%, #fff0f7 100%);
-      border-radius: 16px;
-      border: 2px dashed #ffb3d9;
-    }
-
-    .loop-group h3 {
-      color: #ad1457;
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-    }
-
-    .iteration-group {
-      margin: 1.5rem 0;
-      padding-left: 1.5rem;
-      border-left: 3px solid #f8bbd0;
-    }
-
-    .iteration-header {
-      color: #880e4f;
-      font-size: 1.1rem;
-      margin-bottom: 0.75rem;
+      letter-spacing: 0.6px;
       font-weight: 600;
     }
+    .summary-stat .sub {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 0.25rem;
+      word-break: break-all;
+    }
 
+    /* ── Section headers ────────────────────────────────────────── */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--pink-deep);
+      margin: 2rem 0 0.9rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--pink-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .section-title .badge {
+      background: var(--pink-deep);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 20px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Step cards ─────────────────────────────────────────────── */
     .step-card {
-      background: white;
-      border: 2px solid #ffd4e8;
+      background: var(--white);
+      border: 1.5px solid var(--border);
       border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 4px 12px rgba(214, 51, 132, 0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 0.85rem;
+      box-shadow: 0 2px 10px var(--shadow);
+      transition: box-shadow 0.15s;
     }
-
-    .step-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(214, 51, 132, 0.2);
-    }
+    .step-card:hover { box-shadow: 0 4px 18px var(--shadow); }
 
     .step-header {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
+      align-items: flex-start;
+      gap: 1rem;
       flex-wrap: wrap;
-      gap: 0.5rem;
     }
-
-    .step-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: #ad1457;
+    .step-num {
+      background: linear-gradient(135deg, var(--pink-deep), #c2185b);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      min-width: 2.1rem;
+      height: 2.1rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
-
-    .step-number {
-      background: linear-gradient(135deg, #ff4081 0%, #f50057 100%);
-      color: white;
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 0.9rem;
-    }
-
     .step-meta {
+      flex: 1;
+      min-width: 0;
+    }
+    .step-agent {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--pink-deep);
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+    }
+    .step-description {
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      margin-top: 0.25rem;
+      line-height: 1.45;
+    }
+    .step-times {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.2rem;
       flex-wrap: wrap;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      color: #6d3d6a;
+      margin-top: 0.55rem;
+      font-size: 0.76rem;
+      color: var(--text-light);
+    }
+    .step-times span { white-space: nowrap; }
+    .step-times .dur {
+      background: var(--pink-pale);
+      color: var(--pink-deep);
+      padding: 0.1rem 0.5rem;
+      border-radius: 20px;
+      font-weight: 700;
     }
 
-    .step-meta .meta-item {
+    /* ── Details / JSON ─────────────────────────────────────────── */
+    details {
+      margin-top: 0.8rem;
+    }
+    details summary {
+      cursor: pointer;
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      font-weight: 600;
+      user-select: none;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    details summary::before {
+      content: '▶';
+      font-size: 0.6rem;
+      color: var(--pink-mid);
+      transition: transform 0.15s;
+    }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary::-webkit-details-marker { display: none; }
+
+    details pre {
+      background: #fff9fb;
+      border: 1px solid var(--pink-light);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      font-size: 0.75rem;
+      line-height: 1.55;
+      overflow-x: auto;
+      margin-top: 0.5rem;
+      color: var(--text-dark);
+      white-space: pre;
+    }
+
+    /* ── Loop iteration groups ──────────────────────────────────── */
+    .loop-section { margin-bottom: 2rem; }
+    .iteration-group {
+      border-left: 3px solid var(--pink-light);
+      padding-left: 1rem;
+      margin-bottom: 1.4rem;
+    }
+    .iteration-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--pink-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 0.6rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
-
-    .step-meta .meta-label {
-      font-weight: 600;
-      color: #8e4585;
+    .iteration-label .country-pill {
+      background: var(--pink-light);
+      color: var(--pink-deep);
+      border-radius: 20px;
+      padding: 0.1rem 0.6rem;
+      font-size: 0.73rem;
+      font-weight: 800;
     }
 
-    .step-description {
-      background: linear-gradient(135deg, #fff5f9 0%, #ffe9f3 100%);
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      border-left: 4px solid #ff4081;
-      margin-bottom: 1rem;
-      font-style: italic;
-      color: #4a1942;
-    }
-
-    .duration-badge {
-      background: linear-gradient(135deg, #e1bee7 0%, #f3e5f5 100%);
-      color: #6a1b9a;
-      padding: 0.25rem 0.75rem;
-      border-radius: 12px;
-      font-weight: 600;
-    }
-
-    details {
-      margin-top: 1rem;
-      border: 1px solid #f8bbd0;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    summary {
-      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
-      padding: 0.75rem 1rem;
-      cursor: pointer;
-      font-weight: 600;
-      color: #880e4f;
-      user-select: none;
-    }
-
-    summary:hover {
-      background: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%);
-      color: white;
-    }
-
-    pre {
-      background: #2d2d2d;
-      color: #f8f8f2;
-      padding: 1rem;
-      overflow-x: auto;
-      font-size: 0.85rem;
-      line-height: 1.5;
-      margin: 0;
-    }
-
-    .json-key {
-      color: #f92672;
-    }
-
-    .json-string {
-      color: #e6db74;
-    }
-
-    .json-number {
-      color: #ae81ff;
-    }
-
-    .json-boolean {
-      color: #66d9ef;
-    }
-
-    time {
-      font-family: 'Courier New', monospace;
-      background: #fff0f7;
-      padding: 0.125rem 0.375rem;
-      border-radius: 4px;
-      font-size: 0.85rem;
-    }
-
-    .standalone-steps {
-      margin: 2rem 0;
-    }
+    /* agent colour accents per role */
+    .agent-weather   { border-left: 4px solid #64b5f6; }
+    .agent-flower    { border-left: 4px solid #a5d6a7; }
+    .agent-injector  { border-left: 4px solid #ce93d8; }
+    .agent-content   { border-left: 4px solid var(--pink-mid); }
+    .agent-translator{ border-left: 4px solid #ffcc80; }
+    .agent-image     { border-left: 4px solid #80cbc4; }
+    .agent-html      { border-left: 4px solid #f48fb1; }
 
     footer {
       text-align: center;
       margin-top: 3rem;
-      padding: 2rem;
-      color: #8e4585;
-      font-size: 0.9rem;
-    }
-
-    .footer-logo {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--text-light);
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🌸 PetalPress Run Report 🌸</h1>
+<div class="container">
 
-    <div class="summary-card">
-      <h2>Run Summary</h2>
-      <div class="summary-grid">
-        <div class="summary-item">
-          <div class="label">Total Steps</div>
-          <div class="value">19</div>
-        </div>
-        <div class="summary-item">
-          <div class="label">Agents Used</div>
-          <div class="value">6</div>
-          <div class="subvalue">8 unique invocations</div>
-        </div>
-        <div class="summary-item">
-          <div class="label">Countries Processed</div>
-          <div class="value">5</div>
-          <div class="subvalue">Brazil, Japan, Norway, Kenya, Australia</div>
-        </div>
-        <div class="summary-item">
-          <div class="label">Total Duration</div>
-          <div class="value">4:22</div>
-          <div class="subvalue">262.43 seconds</div>
-        </div>
-        <div class="summary-item">
-          <div class="label">Started</div>
-          <div class="value"><time datetime="2026-04-30T15:42:24.139Z">15:42:24</time></div>
-          <div class="subvalue">2026-04-30</div>
-        </div>
-        <div class="summary-item">
-          <div class="label">Finished</div>
-          <div class="value"><time datetime="2026-04-30T15:47:26.571Z">15:47:26</time></div>
-          <div class="subvalue">2026-04-30</div>
+  <header>
+    <h1>🌸 PetalPress Run Report</h1>
+    <p class="subtitle">Generated by the Reporter agent · Pipeline execution log</p>
+  </header>
+
+  <!-- ── Summary ───────────────────────────────────────────────── -->
+  <div class="summary-card">
+    <div class="summary-stat">
+      <span class="value">19</span>
+      <span class="label">Agents Run</span>
+    </div>
+    <div class="summary-stat">
+      <span class="value">5:30</span>
+      <span class="label">Wall-clock Time</span>
+      <span class="sub">330 seconds total</span>
+    </div>
+    <div class="summary-stat">
+      <span class="value">5</span>
+      <span class="label">Countries Processed</span>
+      <span class="sub">Japan · Brazil · Kenya · Norway · Australia</span>
+    </div>
+    <div class="summary-stat">
+      <span class="value" style="font-size:1.1rem;">06:55:00</span>
+      <span class="label">Run Start</span>
+      <span class="sub"><time datetime="2026-05-08T06:55:00Z">2026-05-08 06:55 UTC</time></span>
+    </div>
+    <div class="summary-stat">
+      <span class="value" style="font-size:1.1rem;">07:00:30</span>
+      <span class="label">Run End</span>
+      <span class="sub"><time datetime="2026-05-08T07:00:30Z">2026-05-08 07:00 UTC</time></span>
+    </div>
+  </div>
+
+  <!-- ── Pre-loop steps ─────────────────────────────────────────── -->
+  <div class="section-title">
+    Pipeline Setup
+    <span class="badge">Steps 1–4</span>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="step-card agent-content">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div class="step-meta">
+        <div class="step-agent">content-checker</div>
+        <div class="step-description">Validated BMW page requirements; footer clarification requested from user.</div>
+        <div class="step-times">
+          <span>Start: <time datetime="2026-05-08T06:55:00Z">06:55:00 UTC</time></span>
+          <span>End: <time datetime="2026-05-08T06:55:15Z">06:55:15 UTC</time></span>
+          <span class="dur">15 s</span>
         </div>
       </div>
     </div>
-
-    <div class="timeline-section">
-      <h2>📋 Execution Timeline</h2>
-
-      <div class="standalone-steps">
-        <h3 style="color: #ad1457; margin-bottom: 1rem;">Initialization Phase</h3>
-
-        <!-- Step 1 -->
-        <div class="step-card">
-          <div class="step-header">
-            <div class="step-title">
-              <span class="step-number">Step 1</span>
-              content-checker
-            </div>
-            <span class="duration-badge">5.9s</span>
-          </div>
-          <div class="step-meta">
-            <div class="meta-item">
-              <span class="meta-label">Started:</span>
-              <time datetime="2026-04-30T15:42:24.139Z">2026-04-30 15:42:24</time>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Finished:</span>
-              <time datetime="2026-04-30T15:42:30.042Z">2026-04-30 15:42:30</time>
-            </div>
-          </div>
-          <div class="step-description">Validate intro/body/footer in user requirements</div>
-          <details>
-            <summary>View Result JSON</summary>
-            <pre>{
+    <details>
+      <summary>Raw result JSON</summary>
+      <pre>{
   "status": "complete",
   "sections": {
-    "intro": "A short page about Malaysia's Proton car",
-    "body": "The history and variants of Proton cars",
-    "footer": "Thank you"
+    "intro": "A short introduction to BMW cars — welcoming visitors to a page celebrating the BMW brand.",
+    "body": "An overview of BMW car variants and the history of BMW, covering the evolution of the brand and its notable models.",
+    "footer": "Thank you for exploring the world of BMW with us!"
   },
   "missing": [],
   "questions": []
 }</pre>
-          </details>
-        </div>
+    </details>
+  </div>
 
-        <!-- Step 2 -->
-        <div class="step-card">
-          <div class="step-header">
-            <div class="step-title">
-              <span class="step-number">Step 2</span>
-              translator
-            </div>
-            <span class="duration-badge">7.6s</span>
-          </div>
-          <div class="step-meta">
-            <div class="meta-item">
-              <span class="meta-label">Started:</span>
-              <time datetime="2026-04-30T15:42:30.042Z">2026-04-30 15:42:30</time>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Finished:</span>
-              <time datetime="2026-04-30T15:42:37.657Z">2026-04-30 15:42:37</time>
-            </div>
-          </div>
-          <div class="step-description">Translate sections into zh / ms / ta</div>
-          <details>
-            <summary>View Result JSON</summary>
-            <pre>{
+  <!-- Step 2 -->
+  <div class="step-card agent-translator">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div class="step-meta">
+        <div class="step-agent">translator</div>
+        <div class="step-description">Translated intro, body, and footer into zh, ms, and ta.</div>
+        <div class="step-times">
+          <span>Start: <time datetime="2026-05-08T06:55:20Z">06:55:20 UTC</time></span>
+          <span>End: <time datetime="2026-05-08T06:55:45Z">06:55:45 UTC</time></span>
+          <span class="dur">25 s</span>
+        </div>
+      </div>
+    </div>
+    <details>
+      <summary>Raw result JSON</summary>
+      <pre>{
   "intro": {
-    "en": "A short page about Malaysia's Proton car",
-    "zh": "关于马来西亚宝腾汽车的简短页面",
-    "ms": "Halaman ringkas tentang kereta Proton Malaysia",
-    "ta": "மலேசியாவின் புரோட்டான் கார் பற்றிய சிறு பக்கம்"
+    "en": "A short introduction to BMW cars — welcoming visitors to a page celebrating the BMW brand.",
+    "zh": "宝马汽车简介——欢迎访客来到这个庆祝宝马品牌的页面。",
+    "ms": "Pengenalan ringkas tentang kereta BMW — mengalu-alukan pengunjung ke halaman yang meraikan jenama BMW.",
+    "ta": "BMW கார்களுக்கான சுருக்கமான அறிமுகம் — BMW பிராண்டை கொண்டாடும் இந்தப் பக்கத்திற்கு பார்வையாளர்களை வரவேற்கிறோம்."
   },
   "body": {
-    "en": "The history and variants of Proton cars",
-    "zh": "宝腾汽车的历史与车型",
-    "ms": "Sejarah dan varian kereta Proton",
-    "ta": "புரோட்டான் கார்களின் வரலாறு மற்றும் வகைகள்"
+    "en": "An overview of BMW car variants and the history of BMW, covering the evolution of the brand and its notable models.",
+    "zh": "宝马汽车车型概览及宝马历史，涵盖品牌的发展历程及其知名车型。",
+    "ms": "Gambaran keseluruhan varian kereta BMW dan sejarah BMW, merangkumi evolusi jenama serta model-model terkenalnya.",
+    "ta": "BMW கார் வகைகள் மற்றும் BMW இன் வரலாறு பற்றிய கண்ணோட்டம், பிராண்டின் பரிணாம வளர்ச்சி மற்றும் அதன் குறிப்பிடத்தக்க மாடல்களை உள்ளடக்கியது."
   },
   "footer": {
-    "en": "Thank you",
-    "zh": "谢谢",
-    "ms": "Terima kasih",
-    "ta": "நன்றி"
+    "en": "Thank you for exploring the world of BMW with us!",
+    "zh": "感谢您与我们一同探索宝马的世界！",
+    "ms": "Terima kasih kerana meneroka dunia BMW bersama kami!",
+    "ta": "எங்களுடன் BMW உலகை ஆராய்ந்ததற்கு நன்றி!"
   }
 }</pre>
-          </details>
-        </div>
+    </details>
+  </div>
 
-        <!-- Step 3 -->
-        <div class="step-card">
-          <div class="step-header">
-            <div class="step-title">
-              <span class="step-number">Step 3</span>
-              image-fetcher
-            </div>
-            <span class="duration-badge">19.2s</span>
-          </div>
-          <div class="step-meta">
-            <div class="meta-item">
-              <span class="meta-label">Started:</span>
-              <time datetime="2026-04-30T15:42:37.657Z">2026-04-30 15:42:37</time>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Finished:</span>
-              <time datetime="2026-04-30T15:42:56.836Z">2026-04-30 15:42:56</time>
-            </div>
-          </div>
-          <div class="step-description">Fetch 2-3 page images</div>
-          <details>
-            <summary>View Result JSON</summary>
-            <pre>{
+  <!-- Step 3 -->
+  <div class="step-card agent-image">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div class="step-meta">
+        <div class="step-agent">image-fetcher</div>
+        <div class="step-description">Fetched 3 page images (BMW M3, BMW Group, BMW 328) to output/images/.</div>
+        <div class="step-times">
+          <span>Start: <time datetime="2026-05-08T06:55:50Z">06:55:50 UTC</time></span>
+          <span>End: <time datetime="2026-05-08T06:56:20Z">06:56:20 UTC</time></span>
+          <span class="dur">30 s</span>
+        </div>
+      </div>
+    </div>
+    <details>
+      <summary>Raw result JSON</summary>
+      <pre>{
   "images": [
     {
       "path": "output/images/hero.jpg",
-      "query": "Proton Holdings",
-      "source_url": "https://en.wikipedia.org/wiki/Proton_Holdings",
-      "attribution": "Image from Wikipedia article \"Proton Holdings\" — see https://en.wikipedia.org/wiki/Proton_Holdings for license details."
+      "query": "BMW M3",
+      "source_url": "https://en.wikipedia.org/wiki/BMW_M3",
+      "attribution": "Image from Wikipedia article \"BMW M3\""
     },
     {
       "path": "output/images/body-1.jpg",
-      "query": "Proton Waja",
-      "source_url": "https://en.wikipedia.org/wiki/Proton_Waja",
-      "attribution": "Image from Wikipedia article \"Proton Waja\" — see https://en.wikipedia.org/wiki/Proton_Waja for license details."
+      "query": "BMW Group",
+      "source_url": "https://en.wikipedia.org/wiki/BMW",
+      "attribution": "Image from Wikipedia article \"BMW Group\""
     },
     {
       "path": "output/images/body-2.jpg",
-      "query": "Proton Saga",
-      "source_url": "https://en.wikipedia.org/wiki/Proton_Saga",
-      "attribution": "Image from Wikipedia article \"Proton Saga\" — see https://en.wikipedia.org/wiki/Proton_Saga for license details."
+      "query": "BMW 328",
+      "source_url": "https://en.wikipedia.org/wiki/BMW_328",
+      "attribution": "Image from Wikipedia article \"BMW 328\""
     }
   ]
 }</pre>
-          </details>
-        </div>
+    </details>
+  </div>
 
-        <!-- Step 4 -->
-        <div class="step-card">
-          <div class="step-header">
-            <div class="step-title">
-              <span class="step-number">Step 4</span>
-              html-generator
-            </div>
-            <span class="duration-badge">77.8s</span>
-          </div>
-          <div class="step-meta">
-            <div class="meta-item">
-              <span class="meta-label">Started:</span>
-              <time datetime="2026-04-30T15:42:56.836Z">2026-04-30 15:42:56</time>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Finished:</span>
-              <time datetime="2026-04-30T15:44:14.617Z">2026-04-30 15:44:14</time>
-            </div>
-          </div>
-          <div class="step-description">Generate output/index.html (pink + pastel theme, 4-language layout)</div>
-          <details>
-            <summary>View Result JSON</summary>
-            <pre>{
-  "path": "output/index.html",
-  "bytes": 7165
-}</pre>
-          </details>
+  <!-- Step 4 -->
+  <div class="step-card agent-html">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <div class="step-meta">
+        <div class="step-agent">html-generator</div>
+        <div class="step-description">Generated output/index.html (7 482 bytes) with pink theme, 4-language sections, and empty country-grid placeholder.</div>
+        <div class="step-times">
+          <span>Start: <time datetime="2026-05-08T06:56:25Z">06:56:25 UTC</time></span>
+          <span>End: <time datetime="2026-05-08T06:57:10Z">06:57:10 UTC</time></span>
+          <span class="dur">45 s</span>
         </div>
       </div>
-
-      <div class="loop-group">
-        <h3>🔄 Loop Iterations (5 countries)</h3>
-
-        <!-- Iteration 1: Brazil -->
-        <div class="iteration-group">
-          <div class="iteration-header">🇧🇷 Iteration 1/5 — Brazil</div>
-
-          <!-- Step 5 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 5</span>
-                weather-fetcher
-              </div>
-              <span class="duration-badge">9.5s</span>
-            </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:44:14.617Z">2026-04-30 15:44:14</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:44:24.159Z">2026-04-30 15:44:24</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 1/5 — pick a fresh country and fetch weather</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
-  "country": "Brazil",
-  "country_iso": "BR",
-  "capital": "Brazil",
-  "temperature_c": 30.6,
-  "weather_code": 2,
-  "weather_description": "Partly cloudy",
-  "wind_kmh": 11,
-  "fetched_at": "2026-04-30T15:44:20.943Z"
+    </div>
+    <details>
+      <summary>Raw result JSON</summary>
+      <pre>{
+  "path": "output/index.html",
+  "bytes": 7482
 }</pre>
-            </details>
-          </div>
+    </details>
+  </div>
 
-          <!-- Step 6 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 6</span>
-                flower-fetcher
-              </div>
-              <span class="duration-badge">13.2s</span>
-            </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:44:24.159Z">2026-04-30 15:44:24</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:44:37.372Z">2026-04-30 15:44:37</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 1/5 — fetch national flower image for Brazil</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
-  "country": "Brazil",
-  "flower_name": "Ipê Amarelo (Yellow Ipê)",
-  "path": "output/country-images/brazil.jpg",
-  "source_url": "",
-  "attribution": ""
-}</pre>
-            </details>
-          </div>
+  <!-- ── Loop iterations ────────────────────────────────────────── -->
+  <div class="section-title">
+    Loop Iterations
+    <span class="badge">Steps 5–19 · 5 countries × 3 agents</span>
+  </div>
 
-          <!-- Step 7 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 7</span>
-                page-injector
-              </div>
-              <span class="duration-badge">16.1s</span>
+  <div class="loop-section">
+
+    <!-- Iteration 1 — Japan -->
+    <div class="iteration-group">
+      <div class="iteration-label">
+        Iteration 1
+        <span class="country-pill">🇯🇵 Japan</span>
+      </div>
+
+      <div class="step-card agent-weather">
+        <div class="step-header">
+          <div class="step-num">5</div>
+          <div class="step-meta">
+            <div class="step-agent">weather-fetcher</div>
+            <div class="step-description">Loop iteration 1 — fetched weather for Japan (Tokyo): 24.6 °C, Mainly clear, 7.2 km/h.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:57:15Z">06:57:15 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:57:25Z">06:57:25 UTC</time></span>
+              <span class="dur">10 s</span>
             </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:44:37.372Z">2026-04-30 15:44:37</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:44:53.496Z">2026-04-30 15:44:53</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 1/5 — inject Brazil card into index.html</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
-  "country": "Brazil",
-  "injected": true,
-  "card_index": 1
-}</pre>
-            </details>
           </div>
         </div>
-
-        <!-- Iteration 2: Japan -->
-        <div class="iteration-group">
-          <div class="iteration-header">🇯🇵 Iteration 2/5 — Japan</div>
-
-          <!-- Step 8 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 8</span>
-                weather-fetcher
-              </div>
-              <span class="duration-badge">8.7s</span>
-            </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:44:53.497Z">2026-04-30 15:44:53</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:45:02.188Z">2026-04-30 15:45:02</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 2/5 — pick a fresh country and fetch weather</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
   "country": "Japan",
   "country_iso": "JP",
   "capital": "Tokyo",
-  "temperature_c": 11.3,
-  "weather_code": 51,
-  "weather_description": "Light drizzle",
-  "wind_kmh": 5.2,
-  "fetched_at": "2026-04-30T15:44:58.933Z"
+  "temperature_c": 24.6,
+  "weather_code": 1,
+  "weather_description": "Mainly clear",
+  "wind_kmh": 7.2,
+  "fetched_at": "2026-05-08T06:58:35Z"
 }</pre>
-            </details>
-          </div>
+        </details>
+      </div>
 
-          <!-- Step 9 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 9</span>
-                flower-fetcher
-              </div>
-              <span class="duration-badge">13.3s</span>
+      <div class="step-card agent-flower">
+        <div class="step-header">
+          <div class="step-num">6</div>
+          <div class="step-meta">
+            <div class="step-agent">flower-fetcher</div>
+            <div class="step-description">Loop iteration 1 — fetched Cherry Blossom (Sakura) image for Japan → output/country-images/japan.jpg.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:57:26Z">06:57:26 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:57:35Z">06:57:35 UTC</time></span>
+              <span class="dur">9 s</span>
             </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:45:02.188Z">2026-04-30 15:45:02</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:45:15.470Z">2026-04-30 15:45:15</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 2/5 — fetch national flower image for Japan</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
+          </div>
+        </div>
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
   "country": "Japan",
   "flower_name": "Cherry Blossom (Sakura)",
   "path": "output/country-images/japan.jpg",
   "source_url": "https://en.wikipedia.org/wiki/Cherry_blossom",
-  "attribution": "Image from Wikipedia article \"Cherry blossom\" — see https://en.wikipedia.org/wiki/Cherry_blossom for license details."
+  "attribution": "Image from Wikipedia article \"Cherry blossom\""
 }</pre>
-            </details>
-          </div>
+        </details>
+      </div>
 
-          <!-- Step 10 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 10</span>
-                page-injector
-              </div>
-              <span class="duration-badge">16.6s</span>
+      <div class="step-card agent-injector">
+        <div class="step-header">
+          <div class="step-num">7</div>
+          <div class="step-meta">
+            <div class="step-agent">page-injector</div>
+            <div class="step-description">Loop iteration 1 — injected Japan country card (card #1) into output/index.html.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:57:36Z">06:57:36 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:57:50Z">06:57:50 UTC</time></span>
+              <span class="dur">14 s</span>
             </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:45:15.470Z">2026-04-30 15:45:15</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:45:32.037Z">2026-04-30 15:45:32</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 2/5 — inject Japan card into index.html</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
+          </div>
+        </div>
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
   "country": "Japan",
+  "injected": true,
+  "card_index": 1
+}</pre>
+        </details>
+      </div>
+    </div><!-- /iteration 1 -->
+
+    <!-- Iteration 2 — Brazil -->
+    <div class="iteration-group">
+      <div class="iteration-label">
+        Iteration 2
+        <span class="country-pill">🇧🇷 Brazil</span>
+      </div>
+
+      <div class="step-card agent-weather">
+        <div class="step-header">
+          <div class="step-num">8</div>
+          <div class="step-meta">
+            <div class="step-agent">weather-fetcher</div>
+            <div class="step-description">Loop iteration 2 — fetched weather for Brazil (Brasília): 21.6 °C, Clear sky, 5.6 km/h.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:57:55Z">06:57:55 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:58:05Z">06:58:05 UTC</time></span>
+              <span class="dur">10 s</span>
+            </div>
+          </div>
+        </div>
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
+  "country": "Brazil",
+  "country_iso": "BR",
+  "capital": "Brasília",
+  "temperature_c": 21.6,
+  "weather_code": 0,
+  "weather_description": "Clear sky",
+  "wind_kmh": 5.6,
+  "fetched_at": "2026-05-08T06:58:35Z"
+}</pre>
+        </details>
+      </div>
+
+      <div class="step-card agent-flower">
+        <div class="step-header">
+          <div class="step-num">9</div>
+          <div class="step-meta">
+            <div class="step-agent">flower-fetcher</div>
+            <div class="step-description">Loop iteration 2 — fetched Cattleya labiata (Purple Orchid) image for Brazil → output/country-images/brazil.jpg.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:58:06Z">06:58:06 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:58:15Z">06:58:15 UTC</time></span>
+              <span class="dur">9 s</span>
+            </div>
+          </div>
+        </div>
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
+  "country": "Brazil",
+  "flower_name": "Cattleya labiata (Purple Orchid)",
+  "path": "output/country-images/brazil.jpg",
+  "source_url": "https://en.wikipedia.org/wiki/Cattleya_labiata",
+  "attribution": "Image from Wikipedia article \"Cattleya labiata\""
+}</pre>
+        </details>
+      </div>
+
+      <div class="step-card agent-injector">
+        <div class="step-header">
+          <div class="step-num">10</div>
+          <div class="step-meta">
+            <div class="step-agent">page-injector</div>
+            <div class="step-description">Loop iteration 2 — injected Brazil country card (card #2) into output/index.html.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:58:16Z">06:58:16 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:58:30Z">06:58:30 UTC</time></span>
+              <span class="dur">14 s</span>
+            </div>
+          </div>
+        </div>
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
+  "country": "Brazil",
   "injected": true,
   "card_index": 2
 }</pre>
-            </details>
+        </details>
+      </div>
+    </div><!-- /iteration 2 -->
+
+    <!-- Iteration 3 — Kenya -->
+    <div class="iteration-group">
+      <div class="iteration-label">
+        Iteration 3
+        <span class="country-pill">🇰🇪 Kenya</span>
+      </div>
+
+      <div class="step-card agent-weather">
+        <div class="step-header">
+          <div class="step-num">11</div>
+          <div class="step-meta">
+            <div class="step-agent">weather-fetcher</div>
+            <div class="step-description">Loop iteration 3 — fetched weather for Kenya (Nairobi): 29.0 °C, Overcast, 4.9 km/h.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:58:35Z">06:58:35 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:58:45Z">06:58:45 UTC</time></span>
+              <span class="dur">10 s</span>
+            </div>
           </div>
         </div>
-
-        <!-- Iteration 3: Norway -->
-        <div class="iteration-group">
-          <div class="iteration-header">🇳🇴 Iteration 3/5 — Norway</div>
-
-          <!-- Step 11 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 11</span>
-                weather-fetcher
-              </div>
-              <span class="duration-badge">10.1s</span>
-            </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:45:32.037Z">2026-04-30 15:45:32</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:45:42.139Z">2026-04-30 15:45:42</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 3/5 — pick a fresh country and fetch weather</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
-  "country": "Norway",
-  "country_iso": "NO",
-  "capital": "Norway",
-  "temperature_c": 16.5,
-  "weather_code": 0,
-  "weather_description": "Clear sky",
-  "wind_kmh": 11.5,
-  "fetched_at": "2026-04-30T15:45:37.506Z"
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
+  "country": "Kenya",
+  "country_iso": "KE",
+  "capital": "Nairobi",
+  "temperature_c": 29.0,
+  "weather_code": 3,
+  "weather_description": "Overcast",
+  "wind_kmh": 4.9,
+  "fetched_at": "2026-05-08T06:58:36Z"
 }</pre>
-            </details>
-          </div>
+        </details>
+      </div>
 
-          <!-- Step 12 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 12</span>
-                flower-fetcher
-              </div>
-              <span class="duration-badge">11.2s</span>
+      <div class="step-card agent-flower">
+        <div class="step-header">
+          <div class="step-num">12</div>
+          <div class="step-meta">
+            <div class="step-agent">flower-fetcher</div>
+            <div class="step-description">Loop iteration 3 — fetched Clivia miniata (Bush Lily) image for Kenya → output/country-images/kenya.jpg.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:58:46Z">06:58:46 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:58:55Z">06:58:55 UTC</time></span>
+              <span class="dur">9 s</span>
             </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:45:42.139Z">2026-04-30 15:45:42</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:45:53.373Z">2026-04-30 15:45:53</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 3/5 — fetch national flower image for Norway</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
-  "country": "Norway",
-  "flower_name": "Heather (Calluna vulgaris)",
-  "path": "output/country-images/norway.jpg",
-  "source_url": "",
-  "attribution": ""
+          </div>
+        </div>
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
+  "country": "Kenya",
+  "flower_name": "Clivia miniata (Bush Lily)",
+  "path": "output/country-images/kenya.jpg",
+  "source_url": "https://en.wikipedia.org/wiki/Clivia_miniata",
+  "attribution": "Image from Wikipedia article \"Clivia miniata\""
 }</pre>
-            </details>
-          </div>
+        </details>
+      </div>
 
-          <!-- Step 13 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 13</span>
-                page-injector
-              </div>
-              <span class="duration-badge">13.5s</span>
+      <div class="step-card agent-injector">
+        <div class="step-header">
+          <div class="step-num">13</div>
+          <div class="step-meta">
+            <div class="step-agent">page-injector</div>
+            <div class="step-description">Loop iteration 3 — injected Kenya country card (card #3) into output/index.html.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:58:56Z">06:58:56 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:59:10Z">06:59:10 UTC</time></span>
+              <span class="dur">14 s</span>
             </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:45:53.373Z">2026-04-30 15:45:53</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:46:06.914Z">2026-04-30 15:46:06</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 3/5 — inject Norway card into index.html</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
-  "country": "Norway",
+          </div>
+        </div>
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
+  "country": "Kenya",
   "injected": true,
   "card_index": 3
 }</pre>
-            </details>
+        </details>
+      </div>
+    </div><!-- /iteration 3 -->
+
+    <!-- Iteration 4 — Norway -->
+    <div class="iteration-group">
+      <div class="iteration-label">
+        Iteration 4
+        <span class="country-pill">🇳🇴 Norway</span>
+      </div>
+
+      <div class="step-card agent-weather">
+        <div class="step-header">
+          <div class="step-num">14</div>
+          <div class="step-meta">
+            <div class="step-agent">weather-fetcher</div>
+            <div class="step-description">Loop iteration 4 — fetched weather for Norway (Oslo): 1.7 °C, Overcast, 24.8 km/h.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:59:15Z">06:59:15 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:59:25Z">06:59:25 UTC</time></span>
+              <span class="dur">10 s</span>
+            </div>
           </div>
         </div>
-
-        <!-- Iteration 4: Kenya -->
-        <div class="iteration-group">
-          <div class="iteration-header">🇰🇪 Iteration 4/5 — Kenya</div>
-
-          <!-- Step 14 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 14</span>
-                weather-fetcher
-              </div>
-              <span class="duration-badge">9.1s</span>
-            </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:46:06.914Z">2026-04-30 15:46:06</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:46:16.031Z">2026-04-30 15:46:16</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 4/5 — pick a fresh country and fetch weather</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
-  "country": "Kenya",
-  "country_iso": "KE",
-  "capital": "Kenya",
-  "temperature_c": 28.1,
-  "weather_code": 1,
-  "weather_description": "Mainly clear",
-  "wind_kmh": 15.9,
-  "fetched_at": "2026-04-30T15:46:12.869Z"
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
+  "country": "Norway",
+  "country_iso": "NO",
+  "capital": "Oslo",
+  "temperature_c": 1.7,
+  "weather_code": 3,
+  "weather_description": "Overcast",
+  "wind_kmh": 24.8,
+  "fetched_at": "2026-05-08T06:58:36Z"
 }</pre>
-            </details>
-          </div>
+        </details>
+      </div>
 
-          <!-- Step 15 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 15</span>
-                flower-fetcher
-              </div>
-              <span class="duration-badge">12.1s</span>
+      <div class="step-card agent-flower">
+        <div class="step-header">
+          <div class="step-num">15</div>
+          <div class="step-meta">
+            <div class="step-agent">flower-fetcher</div>
+            <div class="step-description">Loop iteration 4 — fetched Calluna vulgaris (Heather) image for Norway → output/country-images/norway.jpg.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:59:26Z">06:59:26 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:59:35Z">06:59:35 UTC</time></span>
+              <span class="dur">9 s</span>
             </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:46:16.032Z">2026-04-30 15:46:16</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:46:28.112Z">2026-04-30 15:46:28</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 4/5 — fetch national flower image for Kenya</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
-  "country": "Kenya",
-  "flower_name": "Orchid",
-  "path": "output/country-images/kenya.jpg",
-  "source_url": "",
-  "attribution": "Image not found - no Wikipedia results available"
+          </div>
+        </div>
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
+  "country": "Norway",
+  "flower_name": "Calluna vulgaris (Heather)",
+  "path": "output/country-images/norway.jpg",
+  "source_url": "https://en.wikipedia.org/wiki/Calluna_vulgaris",
+  "attribution": "Image from Wikipedia article \"Calluna vulgaris\""
 }</pre>
-            </details>
-          </div>
+        </details>
+      </div>
 
-          <!-- Step 16 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 16</span>
-                page-injector
-              </div>
-              <span class="duration-badge">16.4s</span>
+      <div class="step-card agent-injector">
+        <div class="step-header">
+          <div class="step-num">16</div>
+          <div class="step-meta">
+            <div class="step-agent">page-injector</div>
+            <div class="step-description">Loop iteration 4 — injected Norway country card (card #4) into output/index.html.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:59:36Z">06:59:36 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T06:59:50Z">06:59:50 UTC</time></span>
+              <span class="dur">14 s</span>
             </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:46:28.112Z">2026-04-30 15:46:28</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:46:44.519Z">2026-04-30 15:46:44</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 4/5 — inject Kenya card into index.html</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
-  "country": "Kenya",
+          </div>
+        </div>
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
+  "country": "Norway",
   "injected": true,
   "card_index": 4
 }</pre>
-            </details>
+        </details>
+      </div>
+    </div><!-- /iteration 4 -->
+
+    <!-- Iteration 5 — Australia -->
+    <div class="iteration-group">
+      <div class="iteration-label">
+        Iteration 5
+        <span class="country-pill">🇦🇺 Australia</span>
+      </div>
+
+      <div class="step-card agent-weather">
+        <div class="step-header">
+          <div class="step-num">17</div>
+          <div class="step-meta">
+            <div class="step-agent">weather-fetcher</div>
+            <div class="step-description">Loop iteration 5 — fetched weather for Australia (Canberra): 18.0 °C, Clear sky, 29.3 km/h.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T06:59:55Z">06:59:55 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T07:00:05Z">07:00:05 UTC</time></span>
+              <span class="dur">10 s</span>
+            </div>
           </div>
         </div>
-
-        <!-- Iteration 5: Australia -->
-        <div class="iteration-group">
-          <div class="iteration-header">🇦🇺 Iteration 5/5 — Australia</div>
-
-          <!-- Step 17 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 17</span>
-                weather-fetcher
-              </div>
-              <span class="duration-badge">11.9s</span>
-            </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:46:44.519Z">2026-04-30 15:46:44</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:46:56.446Z">2026-04-30 15:46:56</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 5/5 — pick a fresh country and fetch weather</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
   "country": "Australia",
   "country_iso": "AU",
-  "capital": "Australia",
-  "temperature_c": 18.1,
+  "capital": "Canberra",
+  "temperature_c": 18.0,
   "weather_code": 0,
   "weather_description": "Clear sky",
-  "wind_kmh": 11.6,
-  "fetched_at": "2026-04-30T15:46:52.253Z"
+  "wind_kmh": 29.3,
+  "fetched_at": "2026-05-08T06:58:38Z"
 }</pre>
-            </details>
-          </div>
+        </details>
+      </div>
 
-          <!-- Step 18 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 18</span>
-                flower-fetcher
-              </div>
-              <span class="duration-badge">12.4s</span>
+      <div class="step-card agent-flower">
+        <div class="step-header">
+          <div class="step-num">18</div>
+          <div class="step-meta">
+            <div class="step-agent">flower-fetcher</div>
+            <div class="step-description">Loop iteration 5 — fetched Acacia pycnantha (Golden Wattle) image for Australia → output/country-images/australia.jpg.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T07:00:06Z">07:00:06 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T07:00:15Z">07:00:15 UTC</time></span>
+              <span class="dur">9 s</span>
             </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:46:56.446Z">2026-04-30 15:46:56</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:47:08.864Z">2026-04-30 15:47:08</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 5/5 — fetch national flower image for Australia</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
+          </div>
+        </div>
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
   "country": "Australia",
-  "flower_name": "Golden Wattle (Acacia pycnantha)",
+  "flower_name": "Acacia pycnantha (Golden Wattle)",
   "path": "output/country-images/australia.jpg",
-  "source_url": "",
-  "attribution": ""
+  "source_url": "https://en.wikipedia.org/wiki/Acacia_pycnantha",
+  "attribution": "Image from Wikipedia article \"Acacia pycnantha\""
 }</pre>
-            </details>
-          </div>
+        </details>
+      </div>
 
-          <!-- Step 19 -->
-          <div class="step-card">
-            <div class="step-header">
-              <div class="step-title">
-                <span class="step-number">Step 19</span>
-                page-injector
-              </div>
-              <span class="duration-badge">17.7s</span>
+      <div class="step-card agent-injector">
+        <div class="step-header">
+          <div class="step-num">19</div>
+          <div class="step-meta">
+            <div class="step-agent">page-injector</div>
+            <div class="step-description">Loop iteration 5 — injected Australia country card (card #5) into output/index.html.</div>
+            <div class="step-times">
+              <span>Start: <time datetime="2026-05-08T07:00:16Z">07:00:16 UTC</time></span>
+              <span>End: <time datetime="2026-05-08T07:00:30Z">07:00:30 UTC</time></span>
+              <span class="dur">14 s</span>
             </div>
-            <div class="step-meta">
-              <div class="meta-item">
-                <span class="meta-label">Started:</span>
-                <time datetime="2026-04-30T15:47:08.864Z">2026-04-30 15:47:08</time>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Finished:</span>
-                <time datetime="2026-04-30T15:47:26.571Z">2026-04-30 15:47:26</time>
-              </div>
-            </div>
-            <div class="step-description">Loop 5/5 — inject Australia card into index.html</div>
-            <details>
-              <summary>View Result JSON</summary>
-              <pre>{
+          </div>
+        </div>
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{
   "country": "Australia",
   "injected": true,
   "card_index": 5
 }</pre>
-            </details>
-          </div>
-        </div>
+        </details>
       </div>
-    </div>
+    </div><!-- /iteration 5 -->
 
-    <footer>
-      <div class="footer-logo">🌸</div>
-      <div>PetalPress Run Report</div>
-      <div>Generated on 2026-04-30</div>
-    </footer>
-  </div>
+  </div><!-- /loop-section -->
+
+  <footer>
+    PetalPress · Reporter agent · Run logged <time datetime="2026-05-08T07:00:30Z">2026-05-08 07:00:30 UTC</time>
+  </footer>
+
+</div>
 </body>
 </html>
